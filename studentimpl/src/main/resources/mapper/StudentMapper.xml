@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh2004.mapper.StudentMapper">
+
+ <select id="selectAllStudent" resultType="com.sh2004.springboot.eneity.Student">
+     select  * from student
+     <where>
+         <if test="queryName != null and queryName != ''">
+             name like concat('%',#{queryName},'%')
+         </if>
+         <if test="ageStart != null and ageStart != '' and ageEnd == '' ">
+             age BETWEEN #{ageStart} AND 999
+         </if>
+         <if test="ageStart == '' and ageEnd != null and ageEnd != ''">
+             age BETWEEN 0 AND #{ageEnd}
+         </if>
+         <if test="ageStart != null and ageStart != '' and ageEnd != null and ageEnd != ''">
+             age BETWEEN #{ageStart} AND #{ageEnd}
+         </if>
+     </where>
+ </select>
+</mapper>
